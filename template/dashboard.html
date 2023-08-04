@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>Message|Dashboard</title>
+  </head>
+
+  <body>
+    <h2 align="center">Dashboard</h2>
+    <!-- {% for x in data %} 
+    {{x}} 
+    {% endfor %} -->
+    <p align="center"><a href="/create">send massage</a></p>
+    <table border="1" align="center">
+      <tr>
+        <th>sr no</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Message</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      {% for x in data %}
+      <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{x.name}}</td>
+        <td>{{x.email}}</td>
+        <td>{{x.mobil}}</td>
+<td>{{x.Message}}</td>
+        <td><a href="/edit/{{x.id}}">Edit</a></td>
+        <td><a href="/delete/{{x.id}}">Delete</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

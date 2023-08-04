@@ -1,0 +1,132 @@
+CRUD operation:
+==================
+C=>insert record into database
+R=>read a data from the database
+U=>update data in database
+D=>delete record from database
+Form:             views.py                   Model
+Name:itvedant->  data is exctracted from->  insert db table
+rno:20             file
+create Form
+==============
+Name:___________
+Email:_____________
+Mobile No:___________
+Message:_____________
+submit
+CSRF:
+===============
+csrf token in the form prevent cross site forgery attack.
+form data must be send along with token generated automatically.
+CSRF Mechanism:
+==============
+{% crsf_token%}
+when form is submitted a csrf token is generated and at the same
+time same csrf token is stored in the system by django[cookies].
+Before form data is being inserted into database ,that form data
+needs to pass through csrf middlware.
+Role of CSRF middleware:
+==========================
+csrf token recieved from==csrf token stored in cookies by django
+form
+if the above condition is true then only middleware allowa you to
+move further to views.py function.otherwise your post request is
+aborted or forbidden
+
+Types of request:
+=====================
+GET and POST
+if the request is GET then request.method value is 'GET'
+if the request is POST then request.method value is 'POST'
+ when filled form submitted request is POST,fetch data from the form.
+ In the form data filled by user in input element are linked to the
+ key which are nothing but name attribute value.
+ that is,
+ uname=itvedant
+ uemail=aa@gamil.com
+ mobile=56757878
+ msg=testing
+when form is submitted these all keys and their value are stored in the
+pre-defined dictionary called as POST in request object
+so that values assigmed to the keys sent by form can be fetched in
+backend or server side.
+itvedant=request.POST['uname']
+aa@gamil.com=request.POST['uemail']
+56757878=request.POST['mobile']
+testing=request.POST['msg']
+
+insert record into database:
+================================
+step 1:create database in the database managemnt system
+step 2:database setting in settings.py file
+       pip install mysqlclient
+creating table that is definig models:
+=======================================
+Model representative of table in database
+create table msg(id int primary key auto-increment,
+                 name varchar(50),
+                 email varchar(50),
+1]                 )
+Model=table
+Model is a class defined in models.py file in application
+folder
+class msg(models.Model):
+any model class defined must be  inherited from Model class which
+is inside models module.
+2]columns in table are data member in model class
+ class msg(models.Model):
+      id=
+      name=
+      email
+3]datatypes of columns
+there are inbuilt functions in models module that are used to
+assign datatype to data members,which eevntually going to be column in table
+datatype                 functions in models module
+====================================================
+varchar(50)               models.CharField(max_length)
+int                       models.IntegerField()
+float                     models.FloatField()
+email                     models.emailfield()
+class Msg(models.Model):
+      name=models.Charfield(max_length=50)
+      email=models.Charfield(max_length=50)
+      mobile=models.BigInteger()
+      msg=models.Charfield(max_length=50)
+step 2:model class defined in models.py file need to be
+      migrated from models.py to data base managemnt system
+      python manage.py makemigrations
+step 3:migrate migrations created in application
+      python manage.py migrate
+insert record sql query:
+===========================
+insert into messageapp_msg(name,email,mobile,msg)
+values(n,mail,mob,msg)
+ORM:
+============
+objectrelational mapping
+orm query  to insert
+synatx:Modelname.objects.create(name=n,email=nail,mobile=mob,msg=msg)
+        Msg.objects.create(name=n,email=nail,mobile=mob,msg=msg)
+Dashboard:
+===============
+it is web page in application where user can have all functionality control
+eg:user creating
+1]view all messages
+2]edit a message
+3]delete a message
+4]link to create or send message
+view records:
+==================
+sql query:slect *from tablename
+ORM query:modelname.objects.all()
+        Msg.objects.all()
+delete:
+===========
+sql query:delete from tablename where id=value
+ORM query:
+get the record
+and then delete record
+step 1:fetch object or row to be deleted
+      m=modelname.objects.filter(id=rid)
+step 2:delete that object
+      m.delete()
